@@ -1,0 +1,30 @@
+{
+    "name": "instagram-apis",
+    "version": "1.0.0",
+    "description": "Insatgram library filled with useful Instagram API's",
+    "main": "index.js",
+    "scripts": {},
+    "keywords": [
+        "instagram",
+        "insatgram api",
+        "instagram library",
+        "instagram lib"
+    ],
+    "author": "Mohamed",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.27.2",
+        "randomstring": "^1.2.2",
+        "readline-sync": "^1.4.10",
+        "request": "^2.88.2",
+        "uuid": "^8.3.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/OnFireMohamed/instagram-apis"
+    },
+    "bugs": {
+        "url": "https://github.com/OnFireMohamed/instagram-apis/issues"
+    },
+    "homepage": "https://github.com/OnFireMohamed/instagram-apis#readme"
+}
