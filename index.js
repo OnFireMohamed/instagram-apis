@@ -1,6 +1,8 @@
 const instagramLogin = require("./src/instagramLogin.js");
 const fs = require("fs");
 const profileAPIs = require("./src/profileAPIs.js");
+const profileAPIs2 = require("./src/profileAPIs.js");
+
 
 class client extends profileAPIs {
     async init(param) {
