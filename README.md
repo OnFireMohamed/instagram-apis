@@ -6,32 +6,30 @@ npm install instagram-apis
 # Authinication with username and password
 
 ```javascript
-const client = require("instagram-apis")()
-async () => {
-    await client.init({
-        username: "USERNAME",
-        password: "PASSWORD",
-    });
-    try {
-    } catch (error) {
-        console.error(JSON.stringify(error.message));
+const lib = require("instagram-apis");
+const client = new lib();
+(
+    async () => {
+        await client.init({
+            username: "USERNAME",
+            password: "PASSWORD"
+        })
     }
-};
+)();
 ```
 
 # Authinication with coookie
 
 ```javascript
-const client = require("instagram-apis")()
-async () => {
-    await client.init({
-        cookie: "COOKIE",
-    });
-    try {
-    } catch (error) {
-        console.error(JSON.stringify(error.message));
+const lib = require("instagram-apis");
+const client = new lib();
+(
+    async () => {
+        await client.init({
+            cookie: "COOKIE"
+        })
     }
-};
+)();
 ```
 
 ## - Profile API's :
