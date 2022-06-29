@@ -18,7 +18,7 @@ const client = new lib();
 )();
 ```
 
-# Authinication with coookie
+# Authinication with cookie
 
 ```javascript
 const lib = require("instagram-apis");
@@ -65,7 +65,7 @@ const client = new lib();
     | ---------------------- | --------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
     | sendMessageToUserIds() | { userIds **[required]** , message **[required]** } | Send Messages To account with User IDs | await client.sendMessageToUserIds({userIds: ["1443437479"], message: "MESSAGE_TEXT"}) |
     | getThreadIdByUserId() | userid **[required]** | Returns the thread id of chat that between logged account and other account | await client.getThreadIdByUserId("1443437479") |
-    | getChatMessages() | { thread_id **[required]**, cursor } | Returns last 20 messages in specific chat with cursor |- await client.getChatMessages({thread_id: "THREAD_ID"})<br/>- await await client.getChatMessages({thread_id: "THREAD_ID", cursor: "CURSOR"})
+    | getChatMessages() | { thread_id **[required]**, cursor } | Returns last 20 messages in specific chat with cursor |- await client.getChatMessages({thread_id: "THREAD_ID"})<br/>- await client.getChatMessages({thread_id: "THREAD_ID", cursor: "CURSOR"})
     | getChats() | cursor | Returns last 20 chats with or without cursor, also last 20 messages of each chat | - await client.getChats()<br/>- await client.getChats("THE_CURSOR") |
     getLastMessagingRequests() | | Returns last pending chats in request messages | await client.getLastMessagingRequests() |
     | acceptMessageRequest() | thread_id **[required]** | Accept message request with specific thread ID | await client.acceptMessageRequest("THREAD_ID")|
