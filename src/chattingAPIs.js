@@ -34,6 +34,17 @@ module.exports = class chattingAPIs extends mediaAPIs {
             throw new Error(data);
         }
     }
+    async makeSeen({threadId, threadItemId}) {
+        try {
+            await axios.post(
+                `https://i.instagram.com/api/v1/direct_v2/threads/${threadId}/items/${threadItemId}/seen/`,
+                `_uuid=${v4()}&use_unified_inbox=true&action=mark_seen&thread_id=${threadId}&item_id=${threadItemId}`,
+                {headers: this.headers}
+            );
+        } catch ({ response: { data } }) {
+            throw new Error(data);
+        }
+    }
     async getThreadIdByUserId(userid) {
         try {
             let {
