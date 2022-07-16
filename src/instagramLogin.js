@@ -104,6 +104,7 @@ module.exports =  class {
         }
     }
     async filterCookie(cookieArray) {
+		if (!cookieArray) return '';
         let val = cookieArray.map((cookie) => {
             return cookie.split(";")[0];
         });
