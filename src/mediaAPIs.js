@@ -1,5 +1,12 @@
 const axios = require("axios");
 const newInboxAPIs = require("./newInboxAPIs.js");
+const bigint = require('big-integer');
+const lower = 'abcdefghijklmnopqrstuvwxyz';
+const upper = lower.toUpperCase();
+const numbers = '0123456789';
+const ig_alphabet =  upper + lower + numbers + '-_';
+const bigint_alphabet = numbers + lower;
+
 
 module.exports = class mediaAPIs extends newInboxAPIs {
     initialize(headers) {
@@ -7,7 +14,24 @@ module.exports = class mediaAPIs extends newInboxAPIs {
         super.initialize(headers);
     }
 
-    async getMediaIdFromURL(url) {
+	getShortcodeFromURL(url) {
+		const regex = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(?:\w+)\/(\w+)/i;
+		const instagramLink = regex.exec(url);
+		if (!instagramLink) return false;
+		return instagramLink[1];
+	}
+
+	shortcodeToMediaId(shortcode) {
+		const o = shortcode.replace(/\S/g, m => {
+			const c = ig_alphabet.indexOf(m);
+			const b = bigint_alphabet.charAt(c);
+			return (b != '') ? b : `<${c}>`;
+		});
+		return bigint(o, 64).toString(10);
+	}
+
+// left here on purpose, in case instagram changes something in their shortcodes
+/*    async getMediaIdFromURL(url) {
         try {
             let { data } = await axios.get(url, {headers: this.headers});
             let mediaId = JSON.stringify(data).replace("\\\"", "\"").match(/\\\"media_id\\\":\\\"(.*?)\\\"/);
@@ -17,6 +41,17 @@ module.exports = class mediaAPIs extends newInboxAPIs {
             throw new Error(data);
         }
     }
+*/
+	getMediaIdFromURL(url) {
+		try {
+			const shortcode = this.getShortcodeFromURL(url);
+			if (!shortcode) throw new Error('Unvalid url');
+			return this.shortcodeToMediaId(shortcode);
+		} catch (err) {
+			throw new Error(err);
+		}
+	}
+
     async getMediaInfoFromMediaId(media_id) {
         try {
             let {data: {items} } = await axios.get(`https://i.instagram.com/api/v1/media/${media_id}/info/`, {headers: this.headers})

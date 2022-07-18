@@ -85,7 +85,9 @@ const client = new lib();
 
     | Function                  | Parameters              | Do What ?                                   | Example                                                                        |
     | ------------------------- | ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------ |
-    | getMediaIdFromURL()       | URL **[required]**      | Returns the media ID of post or reels       | await client.getMediaIdFromURL("https://www.instagram.com/p/CfJn1AHAFdA/")   |
+    | getShortcodeFromURL()     | URL **[required]**      | Returns the shortcode (e.g. `CfXDtqmFUXd`) of post or reels | client.getShortcodeFromURL("https://www.instagram.com/p/CfXDtqmFUXd/") |
+    | shortcodeToMediaId()      | shortcode **[required]**| Converts the shortcode to media ID          | client.shortcodeToMediaId("CfXDtqmFUXd")                                     |
+    | getMediaIdFromURL()       | URL **[required]**      | Returns the media ID of post or reels       | client.getMediaIdFromURL("https://www.instagram.com/p/CfJn1AHAFdA/")         |
     | getMediaInfoFromMediaId() | media_id **[required]** | Returns the media information               | await client.getMediaInfoFromMediaId("MEDIA_ID")                             |
     | getMediaInfoFromURL()     | URL **[required]**      | Returns the media information               | await client.getMediaInfoFromURL("https://www.instagram.com/p/CfJn1AHAFdA/") |
     | likePostByMediaId()       | media_id **[required]** | Like a post with media ID                   | await client.likePostByMediaId("THE_MEDIA_ID")                               |
