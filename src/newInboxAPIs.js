@@ -1,4 +1,5 @@
 const axios = require("axios")
+const myError = require("./myError.js")
 
 module.exports =  class {
     initialize(headers) {
@@ -13,7 +14,7 @@ module.exports =  class {
             );
             return data.users;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async acceeptFollowRequest(userid) {
@@ -25,7 +26,7 @@ module.exports =  class {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 }

@@ -4,6 +4,7 @@ const { v4 } = require("uuid");
 const axios = require("axios");
 const request = require("request");
 const mediaAPIs = require("./mediaAPIs.js");
+const myError = require("./myError.js");
 
 module.exports = class chattingAPIs extends mediaAPIs {
     initialize(cookie) {
@@ -19,7 +20,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             charset: "numeric",
         })}`;
         if (!(typeof userIds == "object"))
-            throw new Error("userIds parameter should be array");
+            throw new myError("userIds parameter should be array");
         let postdata = `recipient_users=[${JSON.stringify(
             userIds
         )}]&action=send_item&is_shh_mode=0&send_attribution=inbox_new_message&client_context=${context}&text=${message}&device_id=android-8cd32a1ba6669cbe&mutation_token=${context}&_uuid=${v4()}&offline_threading_id=${context}`;
@@ -31,7 +32,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getThreadIdByUserId(userid) {
@@ -45,7 +46,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return thread_id;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getChatMessages({ thread_id, cursor = "" }) {
@@ -56,7 +57,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             let { data } = await axios.get(url, { headers: this.headers });
             return data.thread;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getChats(cursor = "") {
@@ -67,7 +68,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             let { data } = await axios.get(url, { headers: this.headers });
             return data.inbox;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getLastMessagingRequests() {
@@ -78,7 +79,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data.inbox.threads;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async acceptMessageRequest(thread_id) {
@@ -90,7 +91,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async restirectChatByUserId(userid) {
@@ -102,7 +103,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 
@@ -115,7 +116,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async deleteChat(thread_id) {
@@ -127,7 +128,7 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async unSendMessage({ thread_id, item_id }) {
@@ -139,22 +140,9 @@ module.exports = class chattingAPIs extends mediaAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
-    
-    async makeSeen({threadId, threadItemId}) {
-        try {
-            await axios.post(
-                `https://i.instagram.com/api/v1/direct_v2/threads/${threadId}/items/${threadItemId}/seen/`,
-                `_uuid=${v4()}&use_unified_inbox=true&action=mark_seen&thread_id=${threadId}&item_id=${threadItemId}`,
-                {headers: this.headers}
-            );
-        } catch ({ response: { data } }) {
-            throw new Error(data);
-        }
-    }
-    
     async sendPhotoToChat({ url, thread_id }) {
         let obj = new photoSend(this.headers.Cookie);
         await obj.send({ url, thread_id });
@@ -220,7 +208,7 @@ class photoSend {
                 { headers }
             );
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async sendPhoto({ thread_id, time }) {
@@ -239,7 +227,7 @@ class photoSend {
             );
             return data;
         } catch (data) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 }
@@ -297,7 +285,7 @@ class videoSend {
                 { headers: this.mainHeaders }
             );
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async upload1(url) {
@@ -310,7 +298,7 @@ class videoSend {
                 { headers: this.mainHeaders }
             );
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 
@@ -339,14 +327,14 @@ class videoSend {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async sendVideo(thread_id) {
         let context = randomString.generate({ length: 19, charset: "numeric" });
         var postdata = `action=send_item&is_shh_mode=0&thread_ids=[${thread_id}]&send_attribution=direct_thread&client_context=${context}&_csrftoken=${
             this.cookie.split("csrftoken=")[1].split(";")[0]
-        }&video_result=&device_id=android-8cd32a1ba6669cbe&mutation_token=${context}&_uuid=${v4()}&upload_id=${
+        }&video_result=&device_id=android-d502d92d2de2995c&mutation_token=${context}&_uuid=${v4()}&upload_id=${
             this.time
         }&offline_threading_id=${context}`;
         let headers = {
@@ -365,7 +353,7 @@ class videoSend {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 }

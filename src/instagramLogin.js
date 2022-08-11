@@ -2,8 +2,9 @@ const axios = require("axios");
 const { v4 } = require("uuid");
 const readLine = require("readline-sync");
 const data = require("./_constants.js");
+const myError = require("./myError.js");
 
-module.exports =  class {
+module.exports = class {
     constructor(username, password) {
         this.username = username;
         this.password = password;
@@ -29,14 +30,13 @@ module.exports =  class {
                 { headers: this.login_headers }
             );
             return await this.filterCookie(headers["set-cookie"]);
-        } catch ({response: {data}}) {
-            console.log(res)
-            // if (data.message === "challenge_required") {
-            //     let apiPath = data.challenge.api_path;
-            //     return await this.postChoice(apiPath);
-            // }
+        } catch ({ response: { data } }) {
+            if (data.message === "challenge_required") {
+                let apiPath = data.challenge.api_path;
+                return await this.postChoice(apiPath);
+            }
         }
-        throw new Error("Error In Login");
+        throw new myError("Error In Login");
     }
 
     async postChoice(path) {
@@ -109,4 +109,4 @@ module.exports =  class {
         });
         return val.join("; ");
     }
-}
+};

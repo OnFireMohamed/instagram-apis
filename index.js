@@ -1,47 +1,31 @@
 const instagramLogin = require("./src/instagramLogin.js");
 const fs = require("fs");
 const profileAPIs = require("./src/profileAPIs.js");
-const profileAPIs2 = require("./src/profileAPIs.js");
-
 
 class client extends profileAPIs {
-    async init(param) {
-        console.log("Inside")
-        this.username = param.username;
-        this.password = param.password;
+    async init({username, password, cookie, saveCookie}) {
+        this.username = username;
+        this.password = password;
         this.cookie =
-            param.cookie == "" || param.cookie === undefined
+            cookie == "" || cookie === undefined
                 ? await new instagramLogin(this.username, this.password).start()
-                : param.cookie;
+                : cookie;
         let filePath = "./sessions.json";
-        let fileWorker =
-            fs.existsSync(filePath) && param.cookie === undefined
-                ? () => {
-                      try {
-                          let data = JSON.parse(
-                              fs.readFileSync(filePath, "utf-8")
-                          );
-                          if (!data[`${this.username}`]) {
-                              !data[`${this.username}`].includes(this.cookie)
-                                  ? data[`${this.username}`].push(this.cookie)
-                                  : fs.writeFileSync(
-                                        filePath,
-                                        JSON.stringify(data)
-                                    );
-                          }
-                      } catch (error) {
-                        console.log(error)
-                      }
-                  }
-                : () => {
-                      try {
-                          let data = { [this.username]: [] };
-                          data[`${this.username}`].push(this.cookie);
-                          fs.writeFileSync(filePath, JSON.stringify(data));
-                      } catch (error) {}
-                  };
+        saveCookie?(
+            () => {
+                if (fs.existsSync(filePath)) {
+                    let data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+                    !data[`${username}`].includes(cookie) ? data[`${username}`].push(cookie) : null;
+                    fs.writeFileSync(filePath, JSON.stringify(data))
+                }
+                else {
+                    let data = { [username]: [cookie] };
+                    fs.writeFileSync(filePath, JSON.stringify(data))
+                }
+            }
+        )() : null;
+
         super.initialize(this.cookie);
-        fileWorker();
         console.log("Logged In..");
     }
 }

@@ -1,6 +1,8 @@
 const data = require("./_constants.js");
 const axios = require("axios");
 const chattingAPIs = require("./chattingAPIs.js");
+const myError = require("./myError.js");
+
 
 module.exports = class profileAPIs extends chattingAPIs {
     wantedValues = [
@@ -32,7 +34,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return user;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getInfoByUserId(id) {
@@ -45,7 +47,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return user;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async followByUserId(userid) {
@@ -67,7 +69,7 @@ module.exports = class profileAPIs extends chattingAPIs {
                 status,
             };
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async followByUsername(username) {
@@ -91,7 +93,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async unfollowByUsername(username) {
@@ -109,7 +111,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async getAccountStoriesDataByUserId(userid) {
@@ -120,7 +122,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data.reel.items;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async changeUsername(username) {
@@ -132,7 +134,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async changeBiography(biography) {
@@ -144,7 +146,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
     async changeFirstName(name) {
@@ -156,7 +158,7 @@ module.exports = class profileAPIs extends chattingAPIs {
             );
             return data;
         } catch ({ response: { data } }) {
-            throw new Error(data);
+            throw new myError(data);
         }
     }
 };

@@ -1,4 +1,5 @@
 # Install the package
+
 ```
 npm install instagram-apis
 ```
@@ -8,28 +9,25 @@ npm install instagram-apis
 ```javascript
 const lib = require("instagram-apis");
 const client = new lib();
-(
-    async () => {
-        await client.init({
-            username: "USERNAME",
-            password: "PASSWORD"
-        })
-    }
-)();
+(async () => {
+    await client.init({
+        username: "USERNAME",
+        password: "PASSWORD",
+        // saveCookie: true
+    });
+})(); // saveCookie parameter used to save your cookie in session.json file;
 ```
 
-# Authinication with cookie
+# Authinication with coookie
 
 ```javascript
 const lib = require("instagram-apis");
 const client = new lib();
-(
-    async () => {
-        await client.init({
-            cookie: "COOKIE"
-        })
-    }
-)();
+(async () => {
+    await client.init({
+        cookie: "COOKIE",
+    });
+})();
 ```
 
 ## - Profile API's :
@@ -65,7 +63,7 @@ const client = new lib();
     | ---------------------- | --------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
     | sendMessageToUserIds() | { userIds **[required]** , message **[required]** } | Send Messages To account with User IDs | await client.sendMessageToUserIds({userIds: ["1443437479"], message: "MESSAGE_TEXT"}) |
     | getThreadIdByUserId() | userid **[required]** | Returns the thread id of chat that between logged account and other account | await client.getThreadIdByUserId("1443437479") |
-    | getChatMessages() | { thread_id **[required]**, cursor } | Returns last 20 messages in specific chat with cursor |- await client.getChatMessages({thread_id: "THREAD_ID"})<br/>- await client.getChatMessages({thread_id: "THREAD_ID", cursor: "CURSOR"})
+    | getChatMessages() | { thread_id **[required]**, cursor } | Returns last 20 messages in specific chat with cursor |- await client.getChatMessages({thread_id: "THREAD_ID"})<br/>- await await client.getChatMessages({thread_id: "THREAD_ID", cursor: "CURSOR"})
     | getChats() | cursor | Returns last 20 chats with or without cursor, also last 20 messages of each chat | - await client.getChats()<br/>- await client.getChats("THE_CURSOR") |
     getLastMessagingRequests() | | Returns last pending chats in request messages | await client.getLastMessagingRequests() |
     | acceptMessageRequest() | thread_id **[required]** | Accept message request with specific thread ID | await client.acceptMessageRequest("THREAD_ID")|
@@ -83,8 +81,8 @@ const client = new lib();
 -   #### All functions returning a values ( no-void functions )
 -   Media ID is an identifier for images, photos, posts, reels, stories and other. It used in API's .
 
-    | Function                  | Parameters              | Do What ?                                   | Example                                                                        |
-    | ------------------------- | ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------ |
+    | Function                  | Parameters              | Do What ?                                   | Example                                                                      |
+    | ------------------------- | ----------------------- | ------------------------------------------- | ---------------------------------------------------------------------------- |
     | getMediaIdFromURL()       | URL **[required]**      | Returns the media ID of post or reels       | await client.getMediaIdFromURL("https://www.instagram.com/p/CfJn1AHAFdA/")   |
     | getMediaInfoFromMediaId() | media_id **[required]** | Returns the media information               | await client.getMediaInfoFromMediaId("MEDIA_ID")                             |
     | getMediaInfoFromURL()     | URL **[required]**      | Returns the media information               | await client.getMediaInfoFromURL("https://www.instagram.com/p/CfJn1AHAFdA/") |
@@ -94,9 +92,10 @@ const client = new lib();
     | getPostComments()         | media_id **[required]** | Returns post comments with speific media ID | await client.getPostComments("THE_MEDIA_ID")                                 |
 
 ## News Inbox API's :
+
 -   #### All functions returning a values ( no-void functions )
 
-| Function               | Parameters            | Do What ?                    | Example                                        |
-| ---------------------- | --------------------- | ---------------------------- | ---------------------------------------------- |
+| Function               | Parameters            | Do What ?                    | Example                                      |
+| ---------------------- | --------------------- | ---------------------------- | -------------------------------------------- |
 | getLastFollowRequests  |                       | Returns last follow requests | await client.getLastFollowRequests()         |
 | acceeptFollowRequest() | UserID **[required]** | Accepts follow request       | await client.acceeptFollowRequest("USER_ID") |
