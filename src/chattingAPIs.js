@@ -6,10 +6,10 @@ const request = require("request");
 const mediaAPIs = require("./mediaAPIs.js");
 
 module.exports = class chattingAPIs extends mediaAPIs {
-    initialize(cookie) {
+    initialize(authorization) {
         let { main_headers } = data();
         this.headers = main_headers;
-        this.headers.Cookie = cookie;
+        this.headers.authorization = authorization;
         super.initialize(this.headers);
     }
 

@@ -14,11 +14,11 @@ module.exports = class profileAPIs extends chattingAPIs {
         "profile_pic_url_hd",
         "is_verified",
     ];
-    initialize(cookie) {
+    initialize(authorization) {
         let { main_headers } = data();
         this.headers = main_headers;
-        this.headers.Cookie = cookie;
-        super.initialize(cookie);
+        this.headers.authorization = authorization;
+        super.initialize(authorization);
     }
     async getUsernameInfo(username) {
         try {
